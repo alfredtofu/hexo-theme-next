@@ -26,7 +26,19 @@
 
       <div class="post-meta">
         <span class="post-time">
-          {{ __('post.posted') }} {{ date(post.date, 'YYYY-MM-DD') }}
+
+          {# 为了按修改日期排序，如果有create_date属性，那么data表示修改时间，而create_date是原来的时间 #}
+
+          {% if post.create_date and post.create_date.length %}
+
+            {{ __('post.posted') }} {{ date(post.create_date, 'YYYY-MM-DD') }}
+            {{ __('  &nbsp 更新于') }} {{ date(post.date, 'YYYY-MM-DD') }}
+
+          {% else %}
+
+            {{ __('post.posted') }} {{ date(post.date, 'YYYY-MM-DD') }}
+
+          {% endif %}
         </span>
 
         {% if post.categories and post.categories.length %}
