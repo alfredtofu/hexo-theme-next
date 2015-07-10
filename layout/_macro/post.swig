@@ -31,12 +31,12 @@
 
           {% if post.create_date and post.create_date.length %}
 
-            {{ __('post.posted') }} {{ date(post.create_date, 'YYYY-MM-DD') }}
-            {{ __('  &nbsp 更新于') }} {{ date(post.date, 'YYYY-MM-DD') }}
+            {{ __('post.posted') }} {{ date(post.create_date, config.date_format) }}
+            {{ __('  &nbsp 更新于') }} {{ date(post.date, config.date_format) }}
 
           {% else %}
 
-            {{ __('post.posted') }} {{ date(post.date, 'YYYY-MM-DD') }}
+            {{ __('post.posted') }} {{ date(post.date, config.date_format) }}
 
           {% endif %}
         </span>
