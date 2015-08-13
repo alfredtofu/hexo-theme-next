@@ -36,7 +36,11 @@
           <span class="post-category" >
             &nbsp; | &nbsp; {{ __('post.in') }}
             {% for cat in post.categories %}
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="{{ url_for(cat.path) }}" itemprop="url" rel="index"><span itemprop="name">{{ cat.name }}</span></a></span>
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="{{ url_for(cat.path) }}" itemprop="url" rel="index">
+                  <span itemprop="name">{{ cat.name }}</span>
+                </a>
+              </span>
 
               {% set cat_length = post.categories.length %}
               {% if cat_length > 1 and loop.index !== cat_length %}
@@ -48,14 +52,14 @@
         {% endif %}
 
         {% if post.comments %}
-          {% if (config.duoshuo and config.duoshuo.shortname) or config.duoshuo_shortname %}
+          {% if (theme.duoshuo and theme.duoshuo.shortname) or theme.duoshuo_shortname %}
             <span class="post-comments-count">
               &nbsp; | &nbsp;
               <a href="{{ url_for(post.path) }}#comments" itemprop="discussionUrl">
                 <span class="post-comments-count ds-thread-count" data-thread-key="{{ post.path }}" itemprop="commentsCount"></span>
               </a>
             </span>
-          {% elseif config.disqus_shortname %}
+          {% elseif theme.disqus_shortname %}
             <span class="post-comments-count">
             &nbsp; | &nbsp;
             <a href="{{ url_for(post.path) }}#comments" itemprop="discussionUrl">
@@ -72,11 +76,19 @@
       {# Gallery support #}
       {% if post.photos and post.photos.length %}
         <div class="post-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+          {% set COLUMN_NUMBER = 3 %}
           {% for photo in post.photos %}
-            <a class="post-gallery-img fancybox" href="{{ url_for(photo) }}" rel="gallery_{{ post._id }}" itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
-              <img src="{{ url_for(photo) }}" itemprop="contentUrl"/>
-            </a>
+            {% if loop.index0 % COLUMN_NUMBER === 0 %}<div class="post-gallery-row">{% endif %}
+              <a class="post-gallery-img fancybox"
+                 href="{{ url_for(photo) }}" rel="gallery_{{ post._id }}"
+                 itemscope itemtype="http://schema.org/ImageObject" itemprop="url">
+                <img src="{{ url_for(photo) }}" itemprop="contentUrl"/>
+              </a>
+            {% if loop.index0 % COLUMN_NUMBER === 2 %}</div>{% endif %}
           {% endfor %}
+
+          {# Append end tag for `post-gallery-row` when (photos size mod COLUMN_NUMBER) is less than COLUMN_NUMBER #}
+          {% if post.photos.length % COLUMN_NUMBER > 0 %}</div>{% endif %}
         </div>
       {% endif %}
 
