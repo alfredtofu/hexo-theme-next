@@ -14,6 +14,10 @@
   <meta name="google-site-verification" content="{{ theme.google_site_verification }}" />
 {% endif %}
 
+{% if theme.baidu_site_verification %}
+  <meta name="baidu-site-verification" content="{{ theme.baidu_site_verification }}" />
+{% endif %}
+
 {% if theme.qihu_site_verification %}
   <meta name="360-site-verification" content="{{ theme.qihu_site_verification }}" />
 {% endif %}
@@ -22,9 +26,15 @@
   <link rel="stylesheet" type="text/css" href="{{ url_for(theme.vendors) }}/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
 {% endif %}
 
-{% if config.language !== 'zh-Hans' and theme.use_font_lato %}
-  <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+{% if theme.use_font_lato %}
+  {% if config.language === 'zh-Hans' %}
+    <link href='//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  {% else %}
+    <link href='//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  {% endif %}
 {% endif %}
+
+<link rel="stylesheet" type="text/css" href="{{ url_for(theme.vendors) }}/font-awesome/css/font-awesome.min.css?v=4.4.0" />
 
 <link rel="stylesheet" type="text/css" href="{{ url_for(theme.css) }}/main.css?v={{ theme.version }}"/>
 
@@ -32,7 +42,9 @@
     <meta name="description" content="{{ config.description }}" />
 {% endif %}
 
-{% if page.tags and page.tags.length %}
+{% if page.keywords %}
+  <meta name="keywords" content="{{ page.keywords }}" />
+{% elif page.tags and page.tags.length %}
   <meta name="keywords" content="{% for tag in page.tags %}{{ tag.name }},{% endfor %}" />
 {% elif theme.keywords %}
   <meta name="keywords" content="{{ theme.keywords }}" />
@@ -43,7 +55,7 @@
 {% endif %}
 
 {% if theme.favicon %}
-  <link rel="shorticon icon" type="image/x-icon" href="{{ url_for(theme.favicon) }}?v={{ theme.version }}" />
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for(theme.favicon) }}?v={{ theme.version }}" />
 {% endif %}
 
 {{ open_graph({
@@ -59,3 +71,8 @@
     sidebar: '{{ theme.sidebar }}'
   };
 </script>
+
+{% if theme.facebook_sdk.enable and theme.facebook_sdk.webmaster %}
+  <meta property="fb:admins" content="{{ theme.facebook_sdk.fb_admin }}" />
+  <meta property="fb:app_id" content="{{ theme.facebook_sdk.app_id }}" />
+{% endif %}
