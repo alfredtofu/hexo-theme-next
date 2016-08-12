@@ -229,8 +229,8 @@ auto_excerpt:
 # ---------------------------------------------------------------
 
 mathjax:
-  enable: false
-  cdn: //cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  enable: true
+  cdn: http://cdn.staticfile.org/mathjax/2.4.0/config/TeX-AMS-MML_HTMLorMML.js
 
 
 # Swiftype Search API Key
