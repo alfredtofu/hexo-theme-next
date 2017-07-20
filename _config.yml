@@ -301,10 +301,10 @@ han: false
 #duoshuo_shortname:
 
 # Disqus
-disqus:
-  enable: true
-  shortname: alfredtofu
-  count: true
+#disqus:
+  #enable: true
+  #shortname: 
+  #count: true
 
 # Hypercomments
 #hypercomments_id:
